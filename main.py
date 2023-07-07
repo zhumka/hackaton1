@@ -27,7 +27,7 @@ def send_message(message):
             bot.send_message(message.chat.id,f'{i}. {result}',reply_markup=markup)
             i+=1
     bot.register_next_step_handler(message,get_message)
-    
+  
 
 url="https://kaktus.media/?lable=8&date="+str(time)+"&order=time"
 html=get_html(url)
@@ -38,7 +38,8 @@ def get_message(message):
     keyboard = telebot.types.ReplyKeyboardMarkup()
     button1 = telebot.types.InlineKeyboardButton('Description', callback_data='yes')
     button2 = telebot.types.InlineKeyboardButton('Photo', callback_data='no')
-    keyboard.row(button1, button2)
+    button3 = telebot.types.InlineKeyboardButton('Quit', callback_data='no')
+    keyboard.row(button1, button2,button3)
     bot.send_message(message.chat.id,'some title news you can see Description of this news and Photo',reply_markup=keyboard)
     bot.register_next_step_handler(message,get_desc)
 
@@ -46,13 +47,12 @@ def get_message(message):
 def get_desc(message):
     global telurl
     if message.text=='Description':
-        bot.send_message(message.chat.id,get_data(get_html(url))[int(telurl.text)]['title'])
+        bot.send_message(message.chat.id,get_data(get_html(url))[int(step)]['title'])
+    if message.text=='Quit':
+        bot.send_message(message.chat.id,'Good bye!')
+        bot.stop_bot()
     
     
-    
-
-
-
 # получаем нужные нам данный с сайта 
 def get_data(html):
     news_dict={}
