@@ -35,7 +35,7 @@ html=get_html(url)
 def get_message(message):
     global telurl
     telurl=bot.send_message(message.chat.id,get_data(get_html(url))[int(message.text)]['url'])
-    keyboard = telebot.types.ReplyKeyboardMarkup()
+    keyboard = telebot.types.InlineKeyboardMarkup()
     button1 = telebot.types.InlineKeyboardButton('Description', callback_data='yes')
     button2 = telebot.types.InlineKeyboardButton('Photo', callback_data='no')
     button3 = telebot.types.InlineKeyboardButton('Quit', callback_data='no')
